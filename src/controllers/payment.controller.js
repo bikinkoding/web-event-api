@@ -2,6 +2,72 @@ const db = require('../config/database');
 const { sendEmail } = require('../utils/email');
 const path = require('path');
 
+const generateEmailTemplate = (title, content) => {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body { 
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f4f4f4;
+        }
+        .container {
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+        .header {
+          background-color: rgb(249, 115, 22);
+          color: white;
+          padding: 20px;
+          text-align: center;
+          border-radius: 5px 5px 0 0;
+        }
+        .content {
+          background-color: white;
+          padding: 20px;
+          border-radius: 0 0 5px 5px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .status {
+          padding: 10px;
+          border-radius: 5px;
+          margin: 20px 0;
+          text-align: center;
+          font-weight: bold;
+        }
+        .status.success {
+          background-color: #e8f5e9;
+          color: #2e7d32;
+        }
+        .footer {
+          text-align: center;
+          margin-top: 20px;
+          color: #666;
+          font-size: 12px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>${title}</h1>
+        </div>
+        <div class="content">
+          ${content}
+        </div>
+        <div class="footer">
+          <p>Email ini dikirim oleh HMSE UNIPI. Mohon jangan membalas email ini.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+};
+
 const paymentController = {
   async submitPaymentProof(req, res) {
     try {
@@ -10,7 +76,7 @@ const paymentController = {
       const userId = req.user.id;
 
       if (!req.file) {
-        return res.status(400).json({ message: 'Payment proof file is required' });
+        return res.status(400).json({ message: 'Bukti pembayaran wajib diunggah' });
       }
 
       // Get the file path relative to the uploads directory
@@ -27,11 +93,11 @@ const paymentController = {
         .first();
 
       if (!registration) {
-        return res.status(404).json({ message: 'Registration not found' });
+        return res.status(404).json({ message: 'Registrasi tidak ditemukan' });
       }
 
       if (registration.payment_status === 'completed') {
-        return res.status(400).json({ message: 'Payment already completed' });
+        return res.status(400).json({ message: 'Pembayaran sudah selesai' });
       }
 
       // Update payment proof
@@ -45,7 +111,7 @@ const paymentController = {
         });
 
       res.json({ 
-        message: 'Payment proof submitted successfully',
+        message: 'Bukti pembayaran berhasil diunggah',
         payment_proof_url
       });
 
@@ -126,11 +192,11 @@ const paymentController = {
         .first();
 
       if (!registration) {
-        return res.status(404).json({ message: 'Registration not found' });
+        return res.status(404).json({ message: 'Registrasi tidak ditemukan' });
       }
 
       if (registration.payment_status === 'completed') {
-        return res.status(400).json({ message: 'Payment already confirmed' });
+        return res.status(400).json({ message: 'Pembayaran sudah dikonfirmasi' });
       }
 
       // Update payment status
@@ -147,11 +213,33 @@ const paymentController = {
       // Send confirmation email to user
       await sendEmail({
         to: registration.user_email,
-        subject: `Payment Confirmed - ${registration.event_title}`,
-        text: `Dear ${registration.user_name},\n\nYour payment for ${registration.event_title} has been confirmed. You are now officially registered for the event.\n\nThank you for your participation!\n\nBest regards,\nHMSE UNIPI`
+        subject: `Pembayaran Dikonfirmasi - ${registration.event_title}`,
+        html: generateEmailTemplate(
+          'Pembayaran Berhasil',
+          `
+            <p>Halo ${registration.user_name},</p>
+            <p>Pembayaran Anda untuk event <strong>${registration.event_title}</strong> telah kami konfirmasi.</p>
+            <div class="status success">
+              ✓ Anda telah terdaftar sebagai peserta event
+            </div>
+            <p>Detail Event:</p>
+            <ul>
+              <li>Nama Event: ${registration.event_title}</li>
+              <li>Status: Pembayaran Selesai</li>
+              <li>Tanggal Konfirmasi: ${new Date().toLocaleDateString('id-ID', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}</li>
+            </ul>
+            <p>Terima kasih atas partisipasi Anda!</p>
+            <p>Salam,<br>HMSE UNIPI</p>
+          `
+        )
       });
 
-      res.json({ message: 'Payment confirmed successfully' });
+      res.json({ message: 'Pembayaran berhasil dikonfirmasi' });
     } catch (error) {
       res.status(500).json({ message: 'Server error', error: error.message });
     }
