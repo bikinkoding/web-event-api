@@ -19,7 +19,7 @@ Key topics covered:
 - Performance optimization techniques
 
 Join us as we dive deep into these exciting developments and prepare for the future of web development.`,
-      image_url: 'https://example.com/images/blog-webdev.jpg',
+      image_url: 'https://img.freepik.com/free-photo/open-book-icon-symbol-yellow-background-education-bookstore-concept-3d-rendering_56104-1334.jpg',
       status: 'published',
       created_by: admin.id,
       created_at: knex.fn.now()
@@ -37,7 +37,7 @@ Topics covered:
 - Common pitfalls to avoid
 
 Real-world examples and case studies included.`,
-      image_url: 'https://example.com/images/blog-startup.jpg',
+      image_url: 'https://img.freepik.com/free-photo/open-book-icon-symbol-yellow-background-education-bookstore-concept-3d-rendering_56104-1334.jpg',
       status: 'published',
       created_by: admin.id,
       created_at: knex.fn.now()
@@ -56,7 +56,7 @@ Learn about:
 - Usability testing
 
 Practical examples and design resources included.`,
-      image_url: 'https://example.com/images/blog-design.jpg',
+      image_url: 'https://img.freepik.com/free-photo/open-book-icon-symbol-yellow-background-education-bookstore-concept-3d-rendering_56104-1334.jpg',
       status: 'published',
       created_by: admin.id,
       created_at: knex.fn.now()
@@ -74,7 +74,7 @@ Topics include:
 - Analytics and measurement
 
 Real case studies and success stories included.`,
-      image_url: 'https://example.com/images/blog-marketing.jpg',
+      image_url: 'https://img.freepik.com/free-photo/open-book-icon-symbol-yellow-background-education-bookstore-concept-3d-rendering_56104-1334.jpg',
       status: 'published',
       created_by: admin.id,
       created_at: knex.fn.now()
@@ -93,7 +93,7 @@ We'll cover:
 - Career paths
 
 Practical exercises and project ideas included.`,
-      image_url: 'https://example.com/images/blog-datascience.jpg',
+      image_url: 'https://img.freepik.com/free-photo/open-book-icon-symbol-yellow-background-education-bookstore-concept-3d-rendering_56104-1334.jpg',
       status: 'published',
       created_by: admin.id,
       created_at: knex.fn.now()
