@@ -6,7 +6,8 @@ const getAllBlogs = async (req, res) => {
     const blogs = await db('blogs')
       .select(
         'blogs.*',
-        db.raw('GROUP_CONCAT(DISTINCT bc.name) as categories')
+        db.raw('GROUP_CONCAT(DISTINCT bc.name) as category_names'),
+        db.raw('GROUP_CONCAT(DISTINCT bc.id) as category_ids')
       )
       .leftJoin('blog_category_relations as bcr', 'blogs.id', 'bcr.blog_id')
       .leftJoin('blog_categories as bc', 'bcr.category_id', 'bc.id')
@@ -14,7 +15,14 @@ const getAllBlogs = async (req, res) => {
       .groupBy('blogs.id')
       .orderBy('blogs.created_at', 'desc');
 
-    res.json(blogs);
+    // Transform the response to include categories as an array of IDs
+    const transformedBlogs = blogs.map(blog => ({
+      ...blog,
+      categories: blog.category_ids ? blog.category_ids.split(',').map(id => parseInt(id)) : [],
+      category_names: blog.category_names ? blog.category_names.split(',').map(name => name.trim()) : []
+    }));
+
+    res.json(transformedBlogs);
   } catch (error) {
     logger.error('Error in getAllBlogs:', error);
     res.status(500).json({ message: 'Internal server error' });

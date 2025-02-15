@@ -15,7 +15,7 @@ exports.seed = async function(knex) {
       location: 'Tech Hub Jakarta',
       capacity: 50,
       price: 750000,
-      image_url: 'https://example.com/images/webdev-workshop.jpg',
+      image_url: 'https://thumbs.dreamstime.com/b/html-coding-concept-book-title-d-business-spine-leather-bound-stack-closeup-blurred-79517148.jpg',
       status: 'published',
       created_by: admin.id,
       created_at: knex.fn.now()
@@ -28,7 +28,7 @@ exports.seed = async function(knex) {
       location: 'Grand Ballroom, Hotel Indonesia',
       capacity: 200,
       price: 1500000,
-      image_url: 'https://example.com/images/marketing-summit.jpg',
+      image_url: 'https://thumbs.dreamstime.com/b/html-coding-concept-book-title-d-business-spine-leather-bound-stack-closeup-blurred-79517148.jpg',
       status: 'published',
       created_by: admin.id,
       created_at: knex.fn.now()
@@ -41,7 +41,7 @@ exports.seed = async function(knex) {
       location: 'Design Studio Jakarta',
       capacity: 30,
       price: 1000000,
-      image_url: 'https://example.com/images/uiux-masterclass.jpg',
+      image_url: 'https://thumbs.dreamstime.com/b/html-coding-concept-book-title-d-business-spine-leather-bound-stack-closeup-blurred-79517148.jpg',
       status: 'published',
       created_by: admin.id,
       created_at: knex.fn.now()
@@ -54,7 +54,7 @@ exports.seed = async function(knex) {
       location: 'Jakarta Convention Center',
       capacity: 100,
       price: 500000,
-      image_url: 'https://example.com/images/startup-pitch.jpg',
+      image_url: 'https://thumbs.dreamstime.com/b/html-coding-concept-book-title-d-business-spine-leather-bound-stack-closeup-blurred-79517148.jpg',
       status: 'published',
       created_by: admin.id,
       created_at: knex.fn.now()
@@ -67,7 +67,7 @@ exports.seed = async function(knex) {
       location: 'Data Center Jakarta',
       capacity: 40,
       price: 2000000,
-      image_url: 'https://example.com/images/data-science.jpg',
+      image_url: 'https://thumbs.dreamstime.com/b/html-coding-concept-book-title-d-business-spine-leather-bound-stack-closeup-blurred-79517148.jpg',
       status: 'published',
       created_by: admin.id,
       created_at: knex.fn.now()
