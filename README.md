@@ -157,46 +157,117 @@ web-event-api/
 
 ### Autentikasi
 ```
-POST /api/auth/register     # Registrasi user baru
-POST /api/auth/login        # Login user
-POST /api/auth/forgot       # Reset password
-POST /api/auth/reset        # Konfirmasi reset password
-```
-
-### Users
-```
-GET    /api/users          # Get semua users
-GET    /api/users/:id      # Get user by ID
-PUT    /api/users/:id      # Update user
-DELETE /api/users/:id      # Delete user
+POST   /api/auth/login            # Login user
+POST   /api/auth/register         # Registrasi user baru
+POST   /api/auth/forgot-password  # Request reset password
+POST   /api/auth/reset-password   # Reset password dengan token
 ```
 
 ### Events
 ```
-GET    /api/events         # Get semua events
-POST   /api/events         # Buat event baru
-GET    /api/events/:id     # Get event by ID
-PUT    /api/events/:id     # Update event
-DELETE /api/events/:id     # Delete event
+# Public Routes
+GET    /api/events               # Get semua events
+GET    /api/events/:id           # Get event by ID
+
+# Protected Routes (Admin Only)
+POST   /api/events               # Buat event baru
+PUT    /api/events/:id           # Update event
+DELETE /api/events/:id           # Delete event
+
+# User Routes (Perlu Authentication)
+POST   /api/events/:id/register  # Daftar ke event
 ```
 
-### Tickets
+### Blog
 ```
-GET    /api/tickets        # Get semua tickets
-POST   /api/tickets        # Buat ticket baru
-GET    /api/tickets/:id    # Get ticket by ID
-PUT    /api/tickets/:id    # Update ticket
-DELETE /api/tickets/:id    # Delete ticket
+# Public Routes
+GET    /api/blogs                    # Get semua blog
+GET    /api/blogs/:id               # Get blog by ID
+GET    /api/blogs/category/:categoryId # Get blog by kategori
+
+# Protected Routes (Admin Only)
+POST   /api/blogs                   # Buat blog baru
+PUT    /api/blogs/:id              # Update blog
+DELETE /api/blogs/:id              # Delete blog
 ```
 
-### Orders
+### Pembayaran
 ```
-GET    /api/orders         # Get semua orders
-POST   /api/orders         # Buat order baru
-GET    /api/orders/:id     # Get order by ID
-PUT    /api/orders/:id     # Update order status
-DELETE /api/orders/:id     # Delete order
+# User Routes (Perlu Authentication)
+POST   /api/payments/registrations/:registrationId/proof  # Upload bukti pembayaran
+GET    /api/payments/my-payments                         # Lihat riwayat pembayaran
+
+# Admin Routes
+GET    /api/payments/pending                             # Lihat pembayaran pending
+POST   /api/payments/registrations/:registrationId/confirm # Konfirmasi pembayaran
 ```
+
+### Admin Panel
+```
+# Semua route memerlukan role admin
+
+# User Management
+GET    /api/admin/users            # Get semua users
+GET    /api/admin/users/:id        # Get user by ID
+PUT    /api/admin/users/:id        # Update user
+DELETE /api/admin/users/:id        # Delete user
+
+# Role Management
+PUT    /api/admin/users/:id/role   # Update role user
+
+# Reports
+GET    /api/admin/reports/sales    # Laporan penjualan
+GET    /api/admin/reports/events   # Laporan event
+```
+
+### Format Response
+
+#### Success Response
+```json
+{
+    "status": "success",
+    "data": {
+        // Data yang diminta
+    },
+    "message": "Pesan sukses"
+}
+```
+
+#### Error Response
+```json
+{
+    "status": "error",
+    "code": 400,
+    "message": "Pesan error yang deskriptif",
+    "errors": [
+        "Detail error 1",
+        "Detail error 2"
+    ]
+}
+```
+
+### Autentikasi
+
+API ini menggunakan JWT (JSON Web Token) untuk autentikasi. Untuk mengakses protected routes, sertakan token di header:
+
+```
+Authorization: Bearer <your_jwt_token>
+```
+
+### Role dan Permissions
+
+1. **Mahasiswa (Default)**
+   - Melihat events dan blogs
+   - Mendaftar ke events
+   - Mengelola profil sendiri
+   - Upload bukti pembayaran
+
+2. **Admin**
+   - Semua akses Mahasiswa
+   - Mengelola events dan blogs
+   - Mengelola users
+   - Konfirmasi pembayaran
+   - Akses laporan
 
 ## Database
 
