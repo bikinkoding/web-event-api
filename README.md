@@ -41,47 +41,85 @@ cd web-event-api
 npm install
 ```
 
-3. Konfigurasi Environment Variables
-Buat file `.env` dengan variabel berikut:
+3. Setup Environment Variables
+Salin file `example.env` menjadi `.env`:
+```bash
+cp example.env .env
+```
+
+Berikut adalah konfigurasi dalam file `.env`:
 ```env
 # Server Configuration
 PORT=3001
 NODE_ENV=development
 
 # Database Configuration
-DB_HOST=localhost
-DB_PORT=3306
+DB_HOST=127.0.0.1
+DB_PORT=3307
 DB_USER=root
-DB_PASSWORD=your_password
+DB_PASSWORD=localhost
 DB_NAME=web_event_db
 
 # JWT Configuration
 JWT_SECRET=your_jwt_secret_key
-JWT_EXPIRES_IN=24h
 
-# Email Configuration
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_email_password
+# SMTP API Configuration
+SMTP_API_URL=http://localhost:3001
+SMTP_API_KEY=your_smtp_api_key
 
-# Frontend URL
+# Frontend URL (for reset password)
 FRONTEND_URL=http://localhost:3000
 ```
 
-4. Setup Database
+4. Setup Database dan Migrasi
+
+a. Buat database MySQL:
 ```bash
-# Buat database
 mysql -u root -p
+```
+
+Setelah masuk ke MySQL shell, jalankan:
+```sql
 CREATE DATABASE web_event_db;
 exit;
+```
+
+b. Jalankan migrasi database:
+```bash
+# Install knex secara global jika belum
+npm install knex -g
 
 # Jalankan migrasi
 npm run migrate
-
-# (Opsional) Jalankan seeder
-npm run seed
+# atau
+knex migrate:latest
 ```
+
+c. (Opsional) Jalankan seeder untuk mengisi data awal:
+```bash
+# Jalankan semua seeder
+npm run seed
+# atau
+knex seed:run
+
+# Jalankan seeder spesifik (jika ada)
+knex seed:run --specific=01_users.js
+```
+
+5. Jalankan Aplikasi
+
+Development mode:
+```bash
+npm run dev
+```
+
+Production mode:
+```bash
+npm run build
+npm start
+```
+
+Server akan berjalan di `http://localhost:3001`
 
 ## Menjalankan Aplikasi
 
