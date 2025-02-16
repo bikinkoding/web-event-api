@@ -329,5 +329,5 @@ npm run test:coverage
 [MIT License](LICENSE)
 
 ## Kontak
-Email: your.email@example.com
+Email: emailhendra2@gmail.com
 Project Link: https://github.com/username/web-event-api
