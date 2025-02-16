@@ -32,7 +32,7 @@ REST API untuk Aplikasi Web Event yang dibangun dengan Node.js, Express, dan MyS
 
 1. Clone repositori
 ```bash
-git clone https://github.com/username/web-event-api.git
+git clone https://github.com/bikinkoding/web-event-api.git
 cd web-event-api
 ```
 
