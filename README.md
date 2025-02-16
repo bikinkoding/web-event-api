@@ -64,8 +64,8 @@ DB_NAME=web_event_db
 JWT_SECRET=your_jwt_secret_key
 
 # SMTP API Configuration
-SMTP_API_URL=http://localhost:3001
-SMTP_API_KEY=your_smtp_api_key
+SMTP_API_URL=https://smtp.bikinkoding.com
+SMTP_API_KEY=1234
 
 # Frontend URL (for reset password)
 FRONTEND_URL=http://localhost:3000
